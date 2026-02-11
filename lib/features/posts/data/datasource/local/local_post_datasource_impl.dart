@@ -5,15 +5,16 @@ import 'package:posts_project/features/posts/data/models/post_model.dart';
 
 class LocalPostDatasourceImpl implements LocalPostDatasource {
   @override
-  Future<Either<Failure, Unit>> cachedPosts(List<PostModel> posts) {
+  Future<Unit> cachedPosts(List<PostModel> posts) {
     // TODO: implement cachedPosts
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, List<PostModel>>> getAllCached() {
+  Future<List<PostModel>> getAllCached() {
     // TODO: implement getAllCached
     throw UnimplementedError();
   }
+  
 
 }
