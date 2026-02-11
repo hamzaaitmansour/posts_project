@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:posts_project/features/posts/data/models/post_model.dart';
 import 'package:posts_project/features/posts/domain/entities/post.dart';
 
 import '../../../../core/error/failure.dart';
