@@ -1,9 +1,25 @@
-import 'package:flutter/cupertino.dart';
+// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:posts_project/features/posts/presentation/pages/posts_page.dart';
+import 'package:provider/provider.dart';
+import 'core/dependency_injection.dart' as di;
+import 'features/posts/presentation/controller/posts_provider.dart'; // ✅ Import as 'di'
 
-void main(){
-  runApp(MyAPP());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // ✅ Required for async main
+  await di.init(); // ✅ Initialize GetIt BEFORE runApp
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => di.sl<PostsProvider>()..fetchPosts(),
+        ),
+      ],
+      child: const MyAPP(),
+    ),
+  );
 }
 
 class MyAPP extends StatelessWidget {
@@ -11,36 +27,12 @@ class MyAPP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-    );
+    return MaterialApp.router(routerConfig: _router);
   }
 }
-
-
 
 final _router = GoRouter(
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => HomeScreen(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => PostsPage())
   ],
 );
-
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.blue,),
-    );
-  }
-}
